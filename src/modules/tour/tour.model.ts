@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { model, Schema } from 'mongoose'
+import TTourModel, { ITour } from './tour.interface'
 
-const tourSchema = new Schema({
+const tourSchema = new Schema<ITour, TTourModel>({
   name: {
     type: String,
     required: true,
@@ -23,11 +24,32 @@ const tourSchema = new Schema({
     required: true,
   },
   images: [String],
-  startDate: { type: Date },
+  startDates: [Date], //multiple date er jonno
+  //   startDate: { type: Date },
   startLocation: { type: String },
   locations: [String],
   slug: String,
 })
 
-const Tour = model('Tour', tourSchema)
+// find ajker diner kachakachi date search:
+
+tourSchema.methods.getNextNearestStartDateAndEndDate = function () {
+  const today = new Date()
+  const futureDates = this.startDates.filter((startDate: Date) => {
+    return startDate > today
+  })
+
+  futureDates.sort((a: Date, b: Date) => a.getTime() - b.getTime())
+
+  const neareststartDate = futureDates[0]
+  const estimatedEndDate = new Date(
+    neareststartDate.getTime() + this.durationHours * 60 * 60 * 1000
+  )
+  return {
+    neareststartDate,
+    estimatedEndDate,
+  }
+}
+
+const Tour = model<ITour, TTourModel>('Tour', tourSchema)
 export default Tour

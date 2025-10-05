@@ -17,7 +17,7 @@ const getSingleTour = async (id: string) => {
   return result
 }
 const UpdateTour = async (id: string, payload: Partial<ITour>) => {
-  const result = await Tour.findByIdAndUpdate(id, payload)
+  const result = await Tour.findByIdAndUpdate(id, payload, { new: true })
   return result
 }
 const deleteTour = async (id: string) => {
@@ -25,10 +25,20 @@ const deleteTour = async (id: string) => {
   return result
 }
 
-export const tourService = [
+const getNextScheduled = async (id: string) => {
+  const tour = await Tour.findById(id)
+  const nextSchedule = tour?.getNextNearestStartDateAndEndDate()
+  return {
+    tour,
+    nextSchedule,
+  }
+}
+
+export const tourService = {
   createTour,
   getTours,
   getSingleTour,
   UpdateTour,
   deleteTour,
-]
+  getNextScheduled
+}
