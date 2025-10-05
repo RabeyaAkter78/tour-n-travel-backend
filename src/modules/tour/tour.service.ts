@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { ITour } from './tour.interface'
 import Tour from './tour.model'
@@ -35,7 +36,7 @@ const deleteTour = async (id: string) => {
 // }
 
 // using custom method
-const getNextScheduled = async (id: string) => {
+const getNextScheduled = async (id?: string) => {
   const tour = await Tour.getNextNearestStartDateAndEndDate()
 //   const nextSchedule = tour?.getNextNearestStartDateAndEndDate()
   return {

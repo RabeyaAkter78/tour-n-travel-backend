@@ -2,15 +2,16 @@
 
 import { Request, Response } from 'express'
 import { userService } from './user.service'
-
+import sendResponse from '../../utils/sendResponse'
+import { StatusCodes } from 'http-status-codes'
 const createUser = async (req: Request, res: Response) => {
   try {
     const payload = req.body
     const result = await userService.createUser(payload)
 
-    res.json({
-      status: true,
-      message: 'User Created Successfully!',
+    sendResponse(res, {
+      StatusCode: StatusCodes.CREATED,
+      message: 'User Created Successfully',
       data: result,
     })
   } catch (error) {
