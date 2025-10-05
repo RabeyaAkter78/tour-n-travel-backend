@@ -31,25 +31,48 @@ const tourSchema = new Schema<ITour, TTourModel>({
   slug: String,
 })
 
-// find ajker diner kachakachi date search:
+// find ajker diner kachakachi date search:static instance
 
-tourSchema.methods.getNextNearestStartDateAndEndDate = function () {
-  const today = new Date()
-  const futureDates = this.startDates.filter((startDate: Date) => {
-    return startDate > today
-  })
+// tourSchema.methods.getNextNearestStartDateAndEndDate = function () {
+//   const today = new Date()
+//   const futureDates = this.startDates.filter((startDate: Date) => {
+//     return startDate > today
+//   })
 
-  futureDates.sort((a: Date, b: Date) => a.getTime() - b.getTime())
+//   futureDates.sort((a: Date, b: Date) => a.getTime() - b.getTime())
 
-  const neareststartDate = futureDates[0]
-  const estimatedEndDate = new Date(
-    neareststartDate.getTime() + this.durationHours * 60 * 60 * 1000
-  )
-  return {
-    neareststartDate,
-    estimatedEndDate,
+//   const neareststartDate = futureDates[0]
+//   const estimatedEndDate = new Date(
+//     neareststartDate.getTime() + this.durationHours * 60 * 60 * 1000
+//   )
+//   return {
+//     neareststartDate,
+//     estimatedEndDate,
+//   }
+// }
+
+// static methods:
+
+tourSchema.static(
+  'getNextNearestStartDateAndEndDate',
+  function getNextNearestStartDateAndEndDate() {
+    const today = new Date()
+    const futureDates = this.startDates.filter((startDate: Date) => {
+      return startDate > today
+    })
+
+    futureDates.sort((a: Date, b: Date) => a.getTime() - b.getTime())
+
+    const neareststartDate = futureDates[0]
+    const estimatedEndDate = new Date(
+      neareststartDate.getTime() + this.durationHours * 60 * 60 * 1000
+    )
+    return {
+      neareststartDate,
+      estimatedEndDate,
+    }
   }
-}
+)
 
 const Tour = model<ITour, TTourModel>('Tour', tourSchema)
 export default Tour

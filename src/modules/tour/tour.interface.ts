@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Model } from 'mongoose'
+import { HydratedDocument, Model } from 'mongoose'
 
 /* eslint-disable prettier/prettier */
 export interface ITour {
@@ -22,6 +22,15 @@ export interface ITourMathods {
   }
 }
 
-type TTourModel = Model<ITour, Record<string, unknown>, ITourMathods>
+// type TTourModel = Model<ITour, Record<string, unknown>, ITourMathods>
+
+interface TTourModel
+  extends Model<ITour, Record<string, unknown>, ITourMathods> {
+  startDates: Date[]
+  durationHours: number
+  getNextNearestStartDateAndEndDate(): Promise<
+    HydratedDocument<ITour, ITourMathods>
+  >
+}
 
 export default TTourModel
