@@ -26,10 +26,10 @@ const createUser = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
   try {
     const result = await userService.getUsers()
-    res.send({
-      status: true,
-      message: 'Users getting Successfully',
-      result,
+    sendResponse(res, {
+      StatusCode: StatusCodes.OK,
+      message: 'User Get Successfully',
+      data: result,
     })
   } catch (error) {
     res.json({
@@ -44,10 +44,10 @@ const getSingleUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId
     const result = await userService.getSingleUser(userId)
-    res.send({
-      status: true,
-      message: 'User getting Successfully',
-      result,
+    sendResponse(res, {
+      StatusCode: StatusCodes.OK,
+      message: 'User Get Successfully',
+      data: result,
     })
   } catch (error) {
     res.json({
@@ -64,10 +64,10 @@ const updateUser = async (req: Request, res: Response) => {
     const body = req.body
 
     const result = await userService.updateUser(userId, body)
-    res.send({
-      status: true,
-      message: 'User Update Successfully',
-      result,
+    sendResponse(res, {
+      StatusCode: StatusCodes.OK,
+      message: 'User Updated Successfully',
+      data: result,
     })
   } catch (error) {
     res.json({
