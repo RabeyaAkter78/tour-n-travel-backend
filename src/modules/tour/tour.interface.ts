@@ -13,6 +13,7 @@ export interface ITour {
   startLocation: string
   locations: string[]
   slug: string
+  availableSeat:number
 }
 
 export interface ITourMathods {

@@ -6,12 +6,14 @@ import express, { NextFunction, Request, Response } from 'express'
 import userRoutes from './modules/user/user.route'
 import tourRouter from './modules/tour/tour.route'
 import { StatusCodes } from 'http-status-codes'
+import bookingRouter from './modules/booking/booking.route'
 const app = express()
 
 app.use(express.json())
 
 app.use('/api/user', userRoutes)
 app.use('/api/tour', tourRouter)
+app.use('/api/booking', bookingRouter)
 
 app.get('/', (req: Request, res: Response) => {
   res.send({
