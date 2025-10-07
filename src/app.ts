@@ -7,6 +7,7 @@ import userRoutes from './modules/user/user.route'
 import tourRouter from './modules/tour/tour.route'
 import { StatusCodes } from 'http-status-codes'
 import bookingRouter from './modules/booking/booking.route'
+import { globalErrorHandlers } from './middlewares/globalErrorHandlers'
 const app = express()
 
 app.use(express.json())
@@ -23,11 +24,11 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 // global error handler
-app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    success: false,
-    message: err.message,
-    error: err,
+app.use(globalErrorHandlers)
+app.use('*', (req: Request, res: Response) => {
+  res.status(404).json({
+    status: false,
+    message: 'Route Not Found',
   })
 })
 
