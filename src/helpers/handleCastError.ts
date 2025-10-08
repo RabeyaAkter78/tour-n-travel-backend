@@ -2,10 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prettier/prettier */
 import { Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
 
-export const handleGenericError = (err: any, res: Response) => {
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+export const handleCastError = (err: any, res: Response) => {
+  res.status(400).json({
     success: false,
     name: err.name,
     message: err.message,
