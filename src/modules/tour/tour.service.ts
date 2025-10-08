@@ -12,13 +12,22 @@ const createTour = async (payload: ITour) => {
 const getTours = async (query: Record<string, unknown>) => {
   const searchTerm = query?.searchTerm || ''
 
+  const searchableFields = ['name', 'startLocation', 'locations']
   const result = await Tour.find({
     $or: [
-      { name: { $regex: searchTerm, $options: 'i' } },
-      { startLocation: { $regex: searchTerm, $options: 'i' } },
-      { locations: { $regex: searchTerm, $options: 'i' } },
+      searchableFields.map((field) => ({
+        [field]: { $regx: searchTerm, $options: 'i' },
+      })),
     ],
   })
+
+  // const result = await Tour.find({
+  //   $or: [
+  //     { name: { $regex: searchTerm, $options: 'i' } },
+  //     { startLocation: { $regex: searchTerm, $options: 'i' } },
+  //     { locations: { $regex: searchTerm, $options: 'i' } },
+  //   ],
+  // })
   return result
 }
 
