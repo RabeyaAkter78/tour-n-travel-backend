@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { ITour } from './tour.interface'
@@ -8,8 +9,16 @@ const createTour = async (payload: ITour) => {
   return result
 }
 
-const getTours = async () => {
-  const result = await Tour.find()
+const getTours = async (query: Record<string, unknown>) => {
+  const searchTerm = query?.searchTerm || ''
+
+  const result = await Tour.find({
+    $or: [
+      { name: { $regex: searchTerm, $options: 'i' } },
+      { startLocation: { $regex: searchTerm, $options: 'i' } },
+      { locations: { $regex: searchTerm, $options: 'i' } },
+    ],
+  })
   return result
 }
 
@@ -38,7 +47,7 @@ const deleteTour = async (id: string) => {
 // using custom method
 const getNextScheduled = async (id?: string) => {
   const tour = await Tour.getNextNearestStartDateAndEndDate()
-//   const nextSchedule = tour?.getNextNearestStartDateAndEndDate()
+  //   const nextSchedule = tour?.getNextNearestStartDateAndEndDate()
   return {
     tour,
     // nextSchedule,
@@ -51,5 +60,5 @@ export const tourService = {
   getSingleTour,
   UpdateTour,
   deleteTour,
-  getNextScheduled
+  getNextScheduled,
 }
