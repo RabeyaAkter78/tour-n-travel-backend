@@ -13,9 +13,12 @@ const userSchema = new Schema<IUser>({
       required: [true, 'Please Enter your Last Name'],
     },
   },
+  // age: {
+  //   type: Number,
+  //   required: [true, 'Please Enter your age'],
+  // },
   age: {
     type: Number,
-    required: [true, 'Please Enter your age'],
   },
   email: {
     type: String,
@@ -28,6 +31,10 @@ const userSchema = new Schema<IUser>({
       message: '{VALUE} is not a valid email',
     },
     immutable: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   photo: String,
   role: {

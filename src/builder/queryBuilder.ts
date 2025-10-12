@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import { model } from 'mongoose'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prettier/prettier */
 import { FilterQuery, Query } from 'mongoose'

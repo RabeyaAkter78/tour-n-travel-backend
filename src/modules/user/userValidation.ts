@@ -14,9 +14,11 @@ const userValidationSchema = z.object({
   age: z
     .number()
     .int('Age must be an integer')
-    .positive('Age must be a positive number'),
+    .positive('Age must be a positive number')
+    .optional(),
 
   email: z.string().email('Email must be a valid email address'),
+  password: z.string().nonempty('Password is required'),
 
   photo: z.string().optional(),
 })
