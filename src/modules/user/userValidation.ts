@@ -2,14 +2,15 @@
 import { z } from 'zod'
 
 const userValidationSchema = z.object({
-  name: z.object({
-    first: z
-      .string()
-      .nonempty('First name must be provided and must be a string'),
-    last: z
-      .string()
-      .nonempty('Last name must be provided and must be a string'),
-  }),
+  // name: z.object({
+  //   first: z
+  //     .string()
+  //     .nonempty('First name must be provided and must be a string'),
+  //   last: z
+  //     .string()
+  //     .nonempty('Last name must be provided and must be a string'),
+  // }),
+  name: z.string().nonempty('Name is required').min(3).max(100),
 
   age: z
     .number()
