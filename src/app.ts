@@ -8,10 +8,12 @@ import tourRouter from './modules/tour/tour.route'
 import { StatusCodes } from 'http-status-codes'
 import bookingRouter from './modules/booking/booking.route'
 import { globalErrorHandlers } from './middlewares/globalErrorHandlers'
+import authRoute from './modules/auth/auth.route'
 const app = express()
 
 app.use(express.json())
 
+app.use('/api/auth', authRoute)
 app.use('/api/user', userRoutes)
 app.use('/api/tour', tourRouter)
 app.use('/api/booking', bookingRouter)
