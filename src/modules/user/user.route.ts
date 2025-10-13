@@ -23,6 +23,9 @@ userRoutes.post(
 userRoutes.get('/:userId', userController.getSingleUser)
 userRoutes.put('/:userId', userController.updateUser)
 userRoutes.delete('/:userId', userController.deleteUser)
+
+// Authorization example:
+
 userRoutes.get('/', userController.getUser)
 
 export default userRoutes

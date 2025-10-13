@@ -2,7 +2,6 @@
 import { model, Schema } from 'mongoose'
 import { IUser } from './user.interface'
 import bcrypt from 'bcrypt'
-import { NextFunction } from 'express'
 import config from '../../config'
 const userSchema = new Schema<IUser>({
   name: {
@@ -38,7 +37,7 @@ const userSchema = new Schema<IUser>({
   password: {
     type: String,
     required: true,
-    select: false,
+    // select: false,  dewa hole error dibe login er somoy:  "message": "data and hash arguments required",
   },
   photo: String,
   role: {
