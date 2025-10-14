@@ -26,6 +26,6 @@ userRoutes.delete('/:userId', userController.deleteUser)
 
 // Authorization example:
 
-userRoutes.get('/', userController.getUser)
+userRoutes.get('/',auth("admin"), userController.getUser)
 
 export default userRoutes
