@@ -17,6 +17,15 @@ authRoute.post(
   validateRequest(AuthValidation.loginValidationSchema),
   AuthController.login
 )
-authRoute.post('/forget-password', validateRequest(AuthValidation.forgetPasswordSchema) ,AuthController.forgetpassword)
+authRoute.post(
+  '/forget-password',
+  validateRequest(AuthValidation.forgetPasswordSchema),
+  AuthController.forgetpassword
+)
+authRoute.post(
+  '/reset-password',
+  validateRequest(AuthValidation.resetPasswordSchema),
+  AuthController.resetPassword
+)
 
 export default authRoute

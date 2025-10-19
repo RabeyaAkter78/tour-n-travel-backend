@@ -7,6 +7,7 @@ import User from '../user/user.model'
 import { ILoginUser } from './auth.interface'
 import jwt from 'jsonwebtoken'
 import config from '../../config'
+import SendMail from '../../utils/sendMail'
 const register = async (payload: IUser) => {
   const result = await User.create(payload)
   return result
@@ -66,14 +67,45 @@ const forgetPassword = async (payload: { email: string }) => {
     role: user?.role,
   }
 
-  const token = jwt.sign(jwtPayload, config.jwt_secret, { expiresIn: '1h' })
+  const token = jwt.sign(jwtPayload, config.jwt_secret!, { expiresIn: '1h' })
 
   const resetLink = `http://localhost:5173/reset-password?id=${user?._id}&token=${token}`
-  console.log(resetLink)
+
+  await SendMail(user.email, 'Reset your Password.', resetLink)
+}
+
+const resetPasword = async (payload: {
+  id: string
+  token: string
+  password: string
+}) => {
+  const user = await User.findById(payload.id)
+  if (!user) {
+    throw new Error('User not found')
+  }
+  if (user?.userStatus === 'inactive') {
+    throw new Error('User is Blacklisted')
+  }
+  jwt.verify(payload.token, config.jwt_secret!, (err, decoded) => {
+    if (err) {
+      throw new Error('Inavlid token or Expired token')
+    }
+  })
+
+  // hash the password
+
+  payload.password = await bcrypt.hash(
+    payload.password,
+    Number(config.bcrypt_salt_rounds)
+  )
+  user.password = payload.password
+  const result = await User.findByIdAndUpdate(user?.id, user, { new: true })
+  return result
 }
 
 export const AuthService = {
   register,
   login,
   forgetPassword,
+  resetPasword,
 }

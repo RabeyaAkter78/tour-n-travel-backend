@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { AuthService } from './auth.service'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
@@ -27,8 +27,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
 
 const forgetpassword = catchAsync(async (req: Request, res: Response) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const result = await AuthService.forgetPassword(req.body);
-  console.log(result)
+  const result = await AuthService.forgetPassword(req.body)
   sendResponse(res, {
     StatusCode: StatusCodes.ACCEPTED,
     status: true,
@@ -36,9 +35,20 @@ const forgetpassword = catchAsync(async (req: Request, res: Response) => {
     data: null,
   })
 })
+const resetPassword = catchAsync(async (req: Request, res: Response) => {
+  // token = req.headers.authorization
+  const result = await AuthService.resetPasword(req.body)
+  sendResponse(res, {
+    StatusCode: StatusCodes.ACCEPTED,
+    status: true,
+    message: 'Password Reset Successfully!',
+    data: result,
+  })
+})
 
 export const AuthController = {
   register,
   login,
   forgetpassword,
+  resetPassword,
 }
