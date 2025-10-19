@@ -17,7 +17,7 @@ const forgetPasswordSchema = z.object({
 
 const resetPasswordSchema = z.object({
   id: z.string().nonempty('id is required'),
-  token: z.string().nonempty('TOken is required'),
+  token: z.string().nonempty('Token is required'),
   password: z.string().nonempty('Password is required'),
 })
 
